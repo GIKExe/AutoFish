@@ -1,0 +1,3 @@
+
+
+from pytesseract import pytesseract 
