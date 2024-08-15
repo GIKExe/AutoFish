@@ -18,7 +18,7 @@ clock = pygame.time.Clock()
 clock2 = pygame.time.Clock()
 font = pygame.font.SysFont('Consolas', 16)
 running = True
-lines = []
+lines = {}
 
 def draw():
 	global lines
@@ -28,13 +28,13 @@ def draw():
 
 		text = tesseract.proc(image)
 		try:
-			lines = text.split('\n')
+			ll = text.split('\n')
 		except:
-			lines = [text]
+			ll = [text]
 		# 0.15065479278564453 s
 
 		# print(lines)
-		lines = minecraft.proc(lines)
+		lines = minecraft.proc(ll)
 
 		win.fill((30,30,30))
 		image = font.render(str(int(clock2.get_fps())), True, (0, 255, 0))
@@ -51,16 +51,17 @@ def check():
 	fishing = None
 
 	while running:
-		if minecraft.sounds[1] in lines:
+		if (minecraft.sounds[1] in lines) and (lines[minecraft.sounds[1]] >= 0.75):
 			if fishing == True:
 				pyautogui.rightClick()
 				fishing = False
 			else:
+				sleep(0.5)
 				pyautogui.rightClick()
 				fishing = True
-				sleep(5)
+				sleep(3)
 
-		elif minecraft.sounds[3] in lines:
+		elif (minecraft.sounds[3] in lines) and (lines[minecraft.sounds[3]] >= 0.75):
 			fishing = False
 		sleep(0.15)
 

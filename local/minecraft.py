@@ -11,6 +11,7 @@ sounds = [
 	'Поплавок вытащен', # 03 <-- статус попалвка
 	'Получен опыт',
 	'Найден предмет',
+	'Кашалот шёлкает',
 	None
 ]
 
@@ -69,7 +70,7 @@ def ratio(a, b):
 	return SequenceMatcher(a=a, b=b).ratio()
 
 def proc(lines):
-	res = []
+	res = {}
 	for line in lines:
 		l = [ratio(line, b) for b in sounds[:-1]]
 		r = max(l)
@@ -79,6 +80,6 @@ def proc(lines):
 			index = l.index(r)
 		sound = sounds[index]
 		if sound:
-			res.append(sound)
+			res[sound] = r
 		# print(f'Исходный: {line}\nРаспознан: {sound}\n%: {r}, {l}\n')
 	return res
